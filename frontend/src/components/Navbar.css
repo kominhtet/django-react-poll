@@ -1,0 +1,96 @@
+/* General Navbar Styles */
+.nav_bg {
+  padding: 0;
+  margin: 0;
+}
+
+.navbar {
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa; /* Light background color */
+}
+
+/* Brand and Nav Links Styling */
+.navbar-brand {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  color: #2980b9 !important;
+}
+
+.navbar-nav {
+  flex-grow: 1;
+  display: flex;
+}
+
+/* Style for individual nav links */
+.navbar-nav .nav-link {
+  padding: 0.5rem 1rem;
+  color: #2980b9 !important;
+}
+
+/* Font and Color Styling */
+.navbar,
+.navbar .navbar-nav .nav-link,
+.navbar .dropdown
+.navbar .dropdown-menu .dropdown-item,
+.navbar .dropdown-toggle,
+.navbar .navbar-brand {
+  font-family: "Inter", Helvetica, sans-serif !important;
+  font-weight: 700 !important;
+  color: #2980b9 !important;
+  background-color: white;
+  transition: color 0.3s ease;
+}
+
+/* Hover Color Change */
+.navbar .navbar-nav .nav-link:hover,
+.navbar .dropdown-menu .dropdown-item:hover,
+.navbar .dropdown-toggle:hover {
+  color: #FF5733 !important;
+  background-color: white;
+}
+
+/* Style for Dropdown Menu */
+.navbar .dropdown-menu .dropdown-item {
+  cursor: pointer;
+  color: #2980b9 !important;
+}
+
+/* Remove default blue background on active or focused dropdown items */
+.navbar .dropdown-menu .dropdown-item:active,
+.navbar .dropdown-menu .dropdown-item:focus {
+  background-color: transparent !important; /* Removes blue background */
+  color: #2980b9 !important; /* Ensures text color remains consistent */
+}
+
+/* Custom background color for hover on dropdown items */
+.navbar .dropdown-menu .dropdown-item:hover {
+  background-color: #f0f0f0 !important; /* Light gray on hover */
+  color: #FF5733 !important; /* Change text color on hover */
+}
+
+/* Active links maintain the original color */
+.navbar .navbar-nav .nav-link.active {
+  color: #2980b9 !important;
+}
+
+/* Ensures mobile collapsed navbar links retain styling */
+.navbar-collapse .nav-link {
+  font-family: "Inter", Helvetica, sans-serif !important;
+  font-weight: 700 !important;
+  color: #2980b9 !important;
+}
+
+/* Right-aligned Login link */
+.navbar .ms-auto {
+  margin-left: auto !important;
+}
+
+/* Adjusts dropdown menu styles for better visibility */
+.dropdown-menu {
+  padding: 0.5rem 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}

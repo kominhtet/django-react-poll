@@ -1,0 +1,81 @@
+/* MainContent.css */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"); /* Ensure proper font import */
+
+body {
+    font-family: "Inter", Helvetica, sans-serif; 
+    font-weight: 400; /* Default font weight for body text */
+    color: #2980b9; 
+}
+
+.container {
+    background-color: #f8f9fa; /* Light background color */
+    border-radius: 4px; /* Rounded corners */
+    padding: 20px; /* Add padding around the container */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.card {
+    border: none; /* Remove default border */
+}
+
+.card-body {
+    padding: 20px; /* Add padding to card body */
+}
+
+.card-text {
+    font-family: "Inter", Helvetica, sans-serif; 
+    font-weight: 400; /* Default font weight for body text */
+    color: #2980b9;
+    margin-bottom: 20px; /* Margin below the description */
+}
+
+.list-group-item {
+    border: none; /* Remove default border for list items */
+    background: transparent; /* Transparent background */
+    padding: 15px 20px; /* Increase padding */
+    font-size: 1rem; /* Slightly larger font size */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.list-group-item:hover {
+    background-color: #e2e6ea; /* Light gray on hover */
+}
+
+.progress {
+    height: 20px; /* Increase height of progress bar */
+    border-radius: 5px; /* Rounded corners for progress bar */
+    overflow: hidden; /* Ensure the content stays within bounds */
+}
+
+.progress-bar {
+    background-color: #007bff; /* Primary color for progress */
+    transition: width 0.4s ease; /* Smooth transition for progress bar */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Primary button color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding inside button */
+    transition: background-color 0.3s; /* Transition for hover effect */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.text-center {
+    margin-top: 50px; /* Spacing for the welcome message */
+}
+
+.text-center h3 {
+    font-family: "Inter", Helvetica, sans-serif; 
+    font-weight: 400; /* Default font weight for body text */
+    color: #2980b9;
+}
+
+.text-center p {
+    font-family: "Inter", Helvetica, sans-serif; 
+    font-weight: 400; /* Default font weight for body text */
+    color: #2980b9;
+}

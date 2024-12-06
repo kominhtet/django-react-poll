@@ -1,0 +1,38 @@
+{% extends "layouts/base.html" %}
+{% block title %} Dashboard {% endblock %} 
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %} 
+<div class="col-lg-12 col-md-12">
+    <div class="card">
+        <div class="card-header card-header-warning">
+            <h4 class="card-title">User Stats</h4>           
+        </div>
+        <div class="card-body table-responsive">
+            <table class="table table-hover">
+                <thead class="text-warning">
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Full Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                </thead>
+                <tbody>
+                    {% for profile in profiles %}
+                    <tr>
+                        <td>{{ profile.user.id }}</td>
+                        <td>{{ profile.user.username }}</td>
+                        <td>{{ profile.user.email }}</td>
+                        <td>{{ profile.full_name }}</td>
+                        <td>{{ profile.address }}</td>
+                        <td>{{ profile.phone }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+

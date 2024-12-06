@@ -1,0 +1,50 @@
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
+      <div class="logo">
+        <a target="_blank" rel="noopener noreferrer" 
+           href="{% url 'index' %}" class="simple-text logo-normal">
+          MSTC POLL DASHBOARD
+        </a>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+   
+          <li class="nav-item {% if 'index' in segment %} active {% endif %}">
+            <a class="nav-link" href="{% url 'index' %}">
+              <i class="material-icons">dashboard</i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="nav-item {% if 'user_list' in segment %} active {% endif %}">
+            <a class="nav-link" href="{% url 'user_list' %}">
+              <i class="material-icons">person</i>
+              <p>Users</p>
+            </a>
+          </li>
+          <li class="nav-item {% if 'poll_list' in segment %} active {% endif %}">
+            <a class="nav-link" href="{% url 'poll_list' %}">
+              <i class="material-icons">poll</i>
+              <p>Polls</p>
+            </a>
+          </li>       
+          <li class="nav-item active-pro ">
+            <a class="nav-link" 
+               target="_blank" rel="noopener noreferrer"  
+               href="#">
+              <i class="material-icons">logout</i>
+              <p>Log Out</p>
+            </a>
+          </li>     
+          
+          {% comment %} <li class="nav-item active">
+            <a class="nav-link" 
+              target="_blank" rel="noopener noreferrer"  
+              href="{% url 'user_list' %}">
+              <i class="material-icons">person</i>
+              <p>Users</p>
+            </a>
+          </li> {% endcomment %}
+          
+        </ul>
+      </div>
+
+    </div>

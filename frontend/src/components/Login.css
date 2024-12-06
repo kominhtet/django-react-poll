@@ -1,0 +1,44 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  .register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: "Oswald", Helvetica;
+    font-weight: 700;
+    color: #2980b9;
+  }
+  
+  .register-box {
+    max-width: 400px;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .register-box h2 {
+    font-size: 28px;
+    text-align: center;
+  }
+  
+  .register-box .form-control {
+    font-family: "Oswald", Helvetica;
+    color: #000000;
+  }
+  
+  .register-box .btn-primary {
+    background-color: #2980b9;
+    border: none;
+  }
+  
+  .register-box .btn-primary:hover {
+    background-color: #1e6e9e;
+  }
+  

@@ -1,0 +1,486 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">person</i>
+            </div>
+            <p class="card-category">User</p>
+            <h3 class="card-title">{{ profile_count }}
+              <!-- <small>GB</small> -->
+            </h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">details</i><a href="{% url 'user_list' %}">Show details</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">poll</i>
+                </div>
+                <p class="card-category">Main Poll</p>
+                <h3 class="card-title">{{ main_poll_count }}</h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">details</i><a href="{% url 'poll_list' %}">Show details</a>
+                </div>
+            </div>
+        </div>
+      </div>
+    
+      <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats">
+              <div class="card-header card-header-danger card-header-icon">
+                  <div class="card-icon">
+                      <i class="material-icons">poll</i>
+                  </div>
+                  <p class="card-category">Sub-Poll</p>
+                  <h3 class="card-title">{{ sub_poll_count }}</h3>
+              </div>
+              <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">details</i> <a href="{% url 'poll_list' %}">Show details</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">poll</i>
+            </div>
+            <p class="card-category">Poll Category</p>
+            <h3 class="card-title">{{ category_poll_count }}</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">details</i> <a href="{% url 'poll_list' %}">Show details</a>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-md-12">
+   
+  
+      <!-- Table displaying poll list -->
+      <div class="card">
+          <div class="card-header card-header-success">
+              <h4 class="card-title">Poll List</h4>
+          </div>
+          <div class="card-body table-responsive">
+              <table class="table table-hover" id="pollTable">
+                  <thead class="text-warning">
+                      <tr>
+                          <th>စဉ်</th>
+                          <th>အကြောင်းအရာ</th>
+                          <th>မေးခွန်းများ</th>
+                          <th>အမျိုးအစား</th>
+                          <th>စတင်သည့်ရက်</th>
+                          <th>နောက်ဆုံးရက်</th>
+                          <th>အခြေအနေ</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for poll in polls_with_votes %}
+                          <tr>
+                              <td>{{ poll.id }}</td>
+                              <td>{{ poll.description }} <br>
+                              Total Voted: {{ poll.total_votes }}</td> 
+                              <td>
+                                  <ul>
+                                      {% for option in poll.polloption_set.all %}
+                                          {% for annotated_option in poll_options_with_votes %}
+                                              {% if option.id == annotated_option.id %}
+                                                  <li>{{ option.name }} ({{ option.point.point }} Pts) - Voted: {{ annotated_option.vote_count }}</li>
+                                              {% endif %}
+                                          {% endfor %}
+                                      {% endfor %}
+                                  </ul>
+                              </td>
+                              <td>{{ poll.poll_category.name }}</td>
+                              <td>{{ poll.start_date }}</td>
+                              <td>{{ poll.end_date }}</td>
+                              <td>{{ poll.status }}</td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-chart">
+          <div class="card-header card-header-dark">
+            <canvas id="countCategory" class="w-100" height="200"></canvas>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Total Count per Category</h4>
+            
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> updated 4 minutes ago
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-tabs card-header-primary">
+            <div class="nav-tabs-navigation">
+              <div class="nav-tabs-wrapper">
+                <span class="nav-tabs-title">Tasks:</span>
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#profile" data-toggle="tab">
+                      <i class="material-icons">bug_report</i> Bugs
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#messages" data-toggle="tab">
+                      <i class="material-icons">code</i> Website
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#settings" data-toggle="tab">
+                      <i class="material-icons">cloud</i> Server
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="profile">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Sign contract for "What are conference organizers afraid of?"</td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                      </td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Create 4 Invisible User Experiences you Never Knew About</td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane" id="messages">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                      </td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Sign contract for "What are conference organizers afraid of?"</td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane" id="settings">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                      </td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Sign contract for "What are conference organizers afraid of?"</td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-warning">
+                <h4 class="card-title">User Stats</h4>           
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-warning">
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Full Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                    </thead>
+                    <tbody>
+                        {% for profile in profiles %}
+                        <tr>
+                            <td>{{ profile.user.id }}</td>
+                            <td>{{ profile.user.username }}</td>
+                            <td>{{ profile.user.email }}</td>
+                            <td>{{ profile.full_name }}</td>
+                            <td>{{ profile.address }}</td>
+                            <td>{{ profile.phone }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+      // Prepare the poll data for the chart
+      var pollLabels = [{% for category in poll_counts_per_category %}"{{ category.poll_category__name }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
+      var pollCounts = [{% for category in poll_counts_per_category %}{{ category.count }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+  
+      // Chart.js script
+      var ctx = document.getElementById('countCategory').getContext('2d');
+      var dailySalesChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: pollLabels,
+              datasets: [{
+                  label: 'Category အလိုက်အရေအတွက်',
+                  data: pollCounts,
+                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  x: { title: { display: true, text: '' }},
+                  y: { title: { display: true, text: '' }, beginAtZero: true }
+              },
+              responsive: true,
+              plugins: { tooltip: { enabled: true }}
+          }
+      });
+  
+      // Filter function for the poll table
+      function filterTable() {
+          var input = document.getElementById('searchInput').value.toLowerCase();
+          var table = document.getElementById('pollTable');
+          var tr = table.getElementsByTagName('tr');
+          
+          for (var i = 1; i < tr.length; i++) {  // Start from 1 to skip table header row
+              var tdDescription = tr[i].getElementsByTagName('td')[1];  // Poll Description column
+              var tdOption = tr[i].getElementsByTagName('td')[2];       // Poll Options column
+              var tdCategory = tr[i].getElementsByTagName('td')[3];     // Poll Category column
+  
+              if (tdDescription || tdOption || tdCategory) {
+                  var descText = tdDescription ? tdDescription.textContent.toLowerCase() : "";
+                  var optText = tdOption ? tdOption.textContent.toLowerCase() : "";
+                  var catText = tdCategory ? tdCategory.textContent.toLowerCase() : "";
+                  
+                  // Check if any of the column texts include the search input
+                  if (descText.includes(input) || optText.includes(input) || catText.includes(input)) {
+                      tr[i].style.display = "";  // Show row if any column matches
+                  } else {
+                      tr[i].style.display = "none";  // Hide row if no column matches
+                  }
+              }
+          }
+      }
+  </script>
+
+{% endblock content %}
+
+

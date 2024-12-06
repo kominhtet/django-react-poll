@@ -1,0 +1,181 @@
+/* Reset and font imports */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Oswald:700|Peddana:400|Inter:700|Roboto:400");
+
+* {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0px;
+  height: 100%;
+}
+
+button:focus-visible {
+  outline: 2px solid #4a90e2 !important;
+  outline: -webkit-focus-ring-color auto 5px !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Center the header section */
+.header {
+  display: flex;
+  align-items: center; /* Vertically center everything within the header */
+  justify-content: space-between; /* Align image and text on left and right */
+  gap: 20px; /* Add some space between the image and text/button section */
+  padding: 20px;
+}
+
+.header-image {
+  width: 200px; /* Adjust the size to your preference */
+  height: auto;
+}
+
+.header .text-section {
+  text-align: center;
+  display: flex;
+  flex-direction: column; /* Stack the elements (text and button) vertically */
+  justify-content: center; /* Vertically center the entire text section */
+  align-items: center;     /* Horizontally center the text and button */
+}
+
+.header .button-wrapper {
+  display: flex;
+  justify-content: center; /* Centers the button horizontally */
+  align-items: center;     /* Ensures vertical centering */
+  margin-top: 20px;        /* Adds space between the text and the button */
+}
+
+.header .btn {
+  display: flex;             /* Use flexbox to center text */
+  justify-content: center;    /* Centers text horizontally */
+  align-items: center;        /* Centers text vertically */
+  width: 149px;
+  height: 48px;
+  background-color: #6dd5fa;
+  border-radius: 8px;
+  font-family: "Peddana", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 30px;
+  padding: 0;                /* Remove padding to ensure the height is consistent */
+  cursor: pointer;
+  text-align: center;         /* Ensure text alignment in case of multi-line text */
+}
+
+.header .get .line1, .header .get .line2 {
+  display: block;
+  font-size: 40px; /* Adjust font size if necessary */
+}
+
+
+.nav-text{
+    font-family: "Inter", Helvetica;
+    font-weight: 700;
+    color: #2980b9; 
+}
+
+.card-img-top {
+  width: 200px; /* Adjust the size */
+  height: auto;
+  margin: 0 auto; /* Center the image inside the card */
+}
+.polls-section .h {
+  text-align: center;
+  padding: 20px;
+  font-family: "Inter", Helvetica;
+  font-weight: 700;
+  color: #2980b9;
+  font-size: 20px;
+}
+.polls-section .check {
+  text-align: center;
+  padding: 10px;
+  font-family: "Inter", Helvetica;
+  font-weight: 700;
+  color: #2980b9;
+  font-size: 15px;
+}
+  .polls-section .poll{
+    text-align: center; /* Ensure text stays centered */
+    padding: 10px;
+    font-family: "Inter", Helvetica;
+    font-weight: 700;
+    color: #2980b9;
+    font-size: 15px;
+    letter-spacing: 0;
+    line-height: 35px;
+  }
+.poll .card-img-top{
+    width: 150px;
+    height: auto;
+    margin: 0 auto;
+    padding: 20px;
+}
+.poll .card-title {
+    text-align: center;
+    
+    top: -1px;
+    left: 0;
+    font-family: "Inter", Helvetica;
+    font-weight: 700;
+    color: #2980b9;
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 20px;
+  }
+@media (min-width: 768px) {
+  .header {
+    
+    justify-content: space-between; /* Distribute image and text on larger screens */
+  }
+}
+
+
+.login-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Full viewport height */
+  font-family: "Oswald", Helvetica;
+  font-weight: 700;
+  color: #2980b9;
+}
+
+.login-box {
+  max-width: 400px;
+  width: 100%; /* Make the login box responsive */
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px; /* Slightly round corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+}
+
+.login-box h2 {
+  font-size: 28px;
+  text-align: center; /* Center the heading text */
+}
+
+.login-box .form-control {
+  font-family: "Oswald", Helvetica;
+  color: #000000;
+}
+
+.login-box .btn-primary {
+  background-color: #2980b9;
+  border: none;
+}
+
+.login-box .register-link {
+  color: #2980b9;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}

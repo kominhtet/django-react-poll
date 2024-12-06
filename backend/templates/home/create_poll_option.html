@@ -1,0 +1,44 @@
+{% extends "layouts/base.html" %}
+{% block title %} Create Poll Option {% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <h2 class="text-center mb-4">Create New Poll Option</h2>           
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="name" class="form-label">Poll Option Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>  <!-- Corrected name field -->
+                        </div>                       
+                        <div class="form-group mb-3">
+                            <label for="poll" class="form-label">poll</label>
+                            <select name="poll" id="poll" class="form-select">
+                                {% for poll in polls %}
+                                    <option value="{{ poll.id }}">{{ poll.description }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="point" class="form-label">Points</label>
+                            <select name="point" id="point" class="form-select">
+                                {% for point in points %}
+                                    <option value="{{ point.id }}">{{ point.point }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'poll_list' %}" class="btn btn-danger">Cancel</a>
+                            <button type="submit" class="btn btn-success">Save Poll Option</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

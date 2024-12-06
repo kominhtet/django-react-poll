@@ -1,0 +1,63 @@
+{% extends "layouts/base.html" %}
+{% block title %} Create Poll {% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <h2 class="text-center mb-4">Create New Poll</h2>
+            
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="form-group mb-3">
+                            <label for="description" class="form-label">Poll Description</label>
+                            <textarea name="description" id="description" class="form-control" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="datetime-local" name="start_date" id="start_date" class="form-control">
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="datetime-local" name="end_date" id="end_date" class="form-control">
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="poll_limit" class="form-label">Poll Limit</label>
+                            <input type="number" name="poll_limit" id="poll_limit" class="form-control" min="1">
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <input type="text" class="form-control" id="status" name="status" placeholder="Enter status" required>
+                            {% comment %} <select name="status" id="status" class="form-select">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select> {% endcomment %}
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="poll_category" class="form-label">Poll Category</label>
+                            <select name="poll_category" id="poll_category" class="form-select">
+                                {% for category in poll_categories %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'poll_list' %}" class="btn btn-danger">Cancel</a>
+                            <button type="submit" class="btn btn-success">Save Poll</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
